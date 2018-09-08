@@ -41,13 +41,34 @@ int main(int argc, char **argv)
         exit(0);
     }
     
-    
-        n_send_len = send(sockfd,"-f00k you.\n-why?\n-how\n",strlen("-fuck you.\n-why?\n-how\n"),0);
+
+    int i;//while里面用作发送计数
+    i=0;
+    while(1)
+    {
+        n_send_len = send(sockfd,"client test message\n",strlen("client test message\n"),0);
+        if (n_send_len == -1)
+        {
+            close(sockfd);
+            printf("connection has been terminated\n");
+            printf("success sending count %d\n", i);
+            exit(0);
+        }
         printf("%d bytes sent\n",n_send_len);
-        n_send_len = send(sockfd,"-**** you.\n-why?\n-how\n",strlen("-fuck you.\n-why?\n-how\n"),0);
+        
+        n_send_len = send(sockfd,"the second message\n",strlen("the second message\n"),0);
+        if (n_send_len == -1)
+        {
+            close(sockfd);
+            printf("connection has been terminated\n");
+            printf("success sending count %d\n", i);
+            exit(0);
+        }
         printf("%d bytes sent\n",n_send_len);
+        i++;
+
+    }
     
-    while(1);
     
     close(sockfd);
 }
